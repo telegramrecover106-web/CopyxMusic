@@ -54,21 +54,21 @@ async def start_handler(client, message):
     owner_id = getattr(client, "clone_owner", MAIN_OWNER)
 
     caption = (
-        f"👋 <b>Hey</b> {user_link}<b>!</b>\n\n"
+        f"✨ <b>HELLO</b> {user_link} 👋\n\n"
         f"<blockquote>🎵 <b>{bot_name_bold}</b>\n"
         f"━━━━━━━━━━━━━━━━━━━\n"
-        f"🎧 High quality VC music streaming\n"
-        f"⚡ yt-dlp powered — no external API\n"
-        f"🤖 Clone system — host your own\n"
-        f"🛡️ Built-in group protection\n"
-        f"🌱 Zero database needed</blockquote>\n\n"
-        f"💡 <i>Use /play &lt;song&gt; in your group to start!</i>"
+        f"🎧 <b>High Quality Music Streaming</b>\n"
+        f"⚡ Fast voice-chat playback\n"
+        f"🎶 Smart queue + controls\n"
+        f"🛡️ Admin protected controls\n"
+        f"━━━━━━━━━━━━━━━━━━━</blockquote>\n\n"
+        f"💡 <i>Add me to a group and use /play &lt;song&gt;</i>"
     )
 
     buttons = [
         [InlineKeyboardButton("➕ Add to Group", url=f"https://t.me/{client.me.username}?startgroup=true")],
         [
-            InlineKeyboardButton("📜 Commands", callback_data="show_help"),
+            InlineKeyboardButton("📜 HELP & CMDS", callback_data="show_help"),
             InlineKeyboardButton("📢 Channel", url="https://t.me/CopymusicOfficial"),
         ],
         [
@@ -133,4 +133,22 @@ async def active_bots_command(client, message):
         tag = "✅ Main" if getattr(c, "is_main", False) else f"🔗 Clone · Owner: <code>{owner}</code>"
         text += f"├ @{username} · {tag}\n"
 
+    await message.reply_text(text, parse_mode=ParseMode.HTML)
+
+
+async def help_command(client, message):
+    text = (
+        "<blockquote>🎧 <b>MUSIC COMMANDS</b></blockquote>\n\n"
+        "🎵 <code>/play song</code> — play music\n"
+        "📋 <code>/queue</code> — show queue\n"
+        "⏭ <code>/skip</code> — next track\n"
+        "⏸ <code>/pause</code> — pause\n"
+        "▶️ <code>/resume</code> — resume\n"
+        "⏹ <code>/stop</code> — stop & clear\n"
+        "🗑 <code>/clear</code> — clear waiting tracks\n"
+        "🏓 <code>/ping</code> — bot status\n\n"
+        "<blockquote>🛡️ <b>ADMIN COMMANDS</b></blockquote>\n\n"
+        "👢 <code>/kick</code> · ⛔ <code>/ban</code> · 🔓 <code>/unban</code>\n"
+        "🔇 <code>/mute</code> · 🔊 <code>/unmute</code>"
+    )
     await message.reply_text(text, parse_mode=ParseMode.HTML)

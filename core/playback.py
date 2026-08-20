@@ -27,7 +27,7 @@ _ASSISTANT_JOIN_ERRORS = (
 async def _try_join_assistant(client, chat_id, status_msg):
     try:
         if status_msg:
-            await status_msg.edit_text("🔄 <b>Joining assistant...</b>", parse_mode=ParseMode.HTML)
+            await status_msg.edit_text("🔄 <b>Connecting the music assistant...</b>\n🎙️ <i>Joining the voice chat...</i>", parse_mode=ParseMode.HTML)
         try:
             invite_link = await client.export_chat_invite_link(chat_id)
         except Exception:
@@ -45,6 +45,12 @@ async def _try_join_assistant(client, chat_id, status_msg):
             else:
                 raise join_err
         await asyncio.sleep(2)
+        if status_msg:
+            try:
+                await status_msg.edit_text("✅ <b>Voice chat connected!</b>\n🎙️ <i>Assistant is ready.</i>", parse_mode=ParseMode.HTML)
+                await asyncio.sleep(0.7)
+            except Exception:
+                pass
         return True
     except Exception as e:
         logger.warning(f"Assistant join failed for {chat_id}: {e}")
@@ -100,7 +106,7 @@ async def play_music_core(client, chat_id, song_info, status_msg=None, retry_att
         file_path = song_info.get("file_path")
         if not file_path or not os.path.exists(file_path):
             if status_msg:
-                await status_msg.edit_text("⬇️ <b>Downloading audio...</b>", parse_mode=ParseMode.HTML)
+                await status_msg.edit_text("⬇️ <b>Preparing audio...</b>\n▰▱▱▱▱▱▱▱▱▱", parse_mode=ParseMode.HTML)
             file_path = await download_song(song_info["url"])
             if not file_path or not os.path.exists(file_path):
                 if status_msg:
@@ -115,7 +121,7 @@ async def play_music_core(client, chat_id, song_info, status_msg=None, retry_att
             song_info["file_path"] = file_path
 
         if status_msg:
-            await status_msg.edit_text("🎧 <b>Starting playback...</b>", parse_mode=ParseMode.HTML)
+            await status_msg.edit_text("🎧 <b>Starting playback...</b>\n▰▰▰▰▱▱▱▱▱▱", parse_mode=ParseMode.HTML)
 
         try:
             await call_py.play(chat_id, file_path)
@@ -146,12 +152,21 @@ async def play_music_core(client, chat_id, song_info, status_msg=None, retry_att
             del state.progress_tasks[chat_id]
         state.paused_chats.discard(chat_id)
 
+        try:
+            await client.send_message(
+                chat_id,
+                "🎙️ <b>Voice chat is active!</b>\n🎵 <i>Music is now streaming.</i>",
+                parse_mode=ParseMode.HTML,
+            )
+        except Exception:
+            pass
+
         bot_name = client.me.first_name or "Music Bot"
         title_short = one_line_title(song_info["title"])
         total_duration = parse_duration_str(song_info.get("duration", "0"))
 
         base_caption = (
-            f"<blockquote><b>🎧 {bot_name} · ᴍᴜsɪᴄ sᴛʀєᴀᴍɪɴɢ</b></blockquote>\n\n"
+            f"<blockquote><b>🎧 {bot_name} · ᴍᴜsɪᴄ sᴛʀᴇᴀᴍɪɴɢ</b></blockquote>\n\n"
             f"<blockquote>🎵 <b>ᴛɪᴛʟᴇ:</b> {title_short}\n"
             f"👤 <b>ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ:</b> {song_info['req']}</blockquote>"
         )
