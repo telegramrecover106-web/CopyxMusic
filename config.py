@@ -12,10 +12,5 @@ COOKIES_FILE = os.getenv("COOKIES_FILE", "cookies.txt")
 YOUTUBE_COOKIES = os.getenv("YOUTUBE_COOKIES", "")
 RATE_LIMIT_COUNT = 4
 RATE_LIMIT_WINDOW = 6
-MAX_TITLE_LEN = 80
+MAX_TITLE_LEN = 30
 PORT = int(os.getenv("PORT", "8080"))
-WELCOME_MADE_BY = "COPYx MUSIC"
-CHANNEL_URL = "https://t.me/CopymusicOfficial"
-ADD_BOT_URL = "https://t.me/COPYxMUSIC_BOT?startgroup=true"
-SUPPORT_URL = os.getenv("SUPPORT_URL", "https://t.me/CopyTRY")
-OWNER_USERNAME = os.getenv("OWNER_USERNAME", "COPYxMUSIC")
