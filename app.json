@@ -1,21 +1,20 @@
 {
-  "name": "Kust Music Bot",
-  "description": "🎧 Kust Music — Free Telegram VC music bot that runs on Render, Koyeb, Railway & Heroku easily!",
-  "repository": "https://github.com/kustbots/kustmusic",
-  "logo": "https://telegra.ph/file/d02b81736a7e9519c6386.jpg",
+  "name": "COPYxMUSIC",
+  "description": "COPYxMUSIC — High quality Telegram VC music bot",
+  "repository": "https://github.com",
   "keywords": ["telegram", "music", "bot", "vc", "python"],
   "stack": "container",
   "env": {
     "API_ID": {
-      "description": "Your Telegram API_ID from https://my.telegram.org",
+      "description": "Telegram API_ID from https://my.telegram.org",
       "required": true
     },
     "API_HASH": {
-      "description": "Your Telegram API_HASH from https://my.telegram.org",
+      "description": "Telegram API_HASH from https://my.telegram.org",
       "required": true
     },
     "BOT_TOKEN": {
-      "description": "Your Telegram bot token from @BotFather",
+      "description": "Bot token from @BotFather",
       "required": true
     },
     "ASSISTANT_SESSION": {
@@ -23,19 +22,19 @@
       "required": true
     },
     "OWNER_ID": {
-      "description": "Your Telegram user ID (integer)",
+      "description": "Your Telegram user ID",
       "required": true
     },
     "SEARCH_API_URL": {
-      "description": "Search API URL (leave blank to use default)",
+      "description": "Optional search API URL",
       "required": false
     },
     "DOWNLOAD_API_BASE": {
-      "description": "Download API base URL (leave blank to use yt-dlp)",
+      "description": "Optional download API base",
       "required": false
     },
     "YOUTUBE_COOKIES": {
-      "description": "Paste your YouTube cookies here (optional, for bypassing rate limits)",
+      "description": "Optional YouTube cookies",
       "required": false
     }
   }

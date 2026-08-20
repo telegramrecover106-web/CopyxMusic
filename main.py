@@ -9,24 +9,24 @@ from pyrogram.handlers import MessageHandler
 
 import state
 from clients import app, call_py, user_app
-from config import COOKIES_FILE, DEPLOYED_OWNER_ID, YOUTUBE_COOKIES
+from config import COOKIES_FILE, DEPLOYED_OWNER_ID, YOUTUBE_COOKIES, DOWNLOAD_DIR, DATA_DIR, API_ID, BOT_TOKEN, SESSION_STRING
 from handlers.router import register_handlers
 from handlers.system import active_bots_command, clone_command
 from server import start_server
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - [KustMusic] - %(levelname)s - %(message)s",
+    format="%(asctime)s - [COPYxMUSIC] - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
-if not os.path.exists("downloads"):
-    os.makedirs("downloads")
+os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+os.makedirs(DATA_DIR, exist_ok=True)
 
 if YOUTUBE_COOKIES:
     with open(COOKIES_FILE, "w", encoding="utf-8") as _cf:
         _cf.write(YOUTUBE_COOKIES)
-    logger.info(f"Cookies written to {COOKIES_FILE} from YOUTUBE_COOKIES env")
+    logger.info(f"Cookies written to {COOKIES_FILE}")
 
 
 def _init_ejs_solver():
@@ -35,7 +35,7 @@ def _init_ejs_solver():
         if result.returncode == 0:
             logger.info(f"Deno detected: {result.stdout.strip()}")
         else:
-            logger.warning("Deno not found in PATH — yt-dlp JS challenges may fail")
+            logger.warning("Deno not found — yt-dlp JS challenges may fail")
         subprocess.run(["yt-dlp", "--rm-cache-dir"], check=False, capture_output=True)
         subprocess.run(
             ["yt-dlp", "--remote-components", "ejs:github",
@@ -46,12 +46,19 @@ def _init_ejs_solver():
     except Exception as e:
         logger.warning(f"EJS solver init failed: {e}")
 
+
 threading.Thread(target=_init_ejs_solver, daemon=True).start()
 
 
 async def main():
-    logger.info("Starting KustMusic")
+    if not API_ID or not BOT_TOKEN:
+        logger.error("API_ID and BOT_TOKEN are required. Set them in environment / Replit Secrets.")
+        return
+    if not SESSION_STRING:
+        logger.error("ASSISTANT_SESSION (or STRING_SESSION) is required.")
+        return
 
+    logger.info("Starting COPYxMUSIC")
     await start_server()
 
     await app.start()
@@ -73,8 +80,15 @@ async def main():
 
     await idle()
 
-    await call_py.stop()
-    await user_app.stop()
+    # Shutdown
+    try:
+        await call_py.stop()
+    except Exception:
+        pass
+    try:
+        await user_app.stop()
+    except Exception:
+        pass
     for c in list(state.active_clients.values()):
         try:
             await c.stop()

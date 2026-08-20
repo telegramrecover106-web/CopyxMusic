@@ -1,6 +1,6 @@
 # Netscape HTTP Cookie File
 # ═══════════════════════════════════════════════════════════
-#  KUST MUSIC — YouTube Cookies File
+#  COPYxMUSIC — YouTube Cookies File
 # ═══════════════════════════════════════════════════════════
 #
 # This file lets yt-dlp authenticate with YouTube using your
