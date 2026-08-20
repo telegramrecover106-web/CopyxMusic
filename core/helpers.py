@@ -17,15 +17,9 @@ def to_bold_unicode(text):
 
 
 def one_line_title(full_title):
-    full_title = str(full_title or "Unknown track").replace("\n", " ").strip()
     if len(full_title) <= MAX_TITLE_LEN:
         return full_title
     return full_title[: MAX_TITLE_LEN - 1] + "…"
-
-
-def html_escape(text):
-    text = str(text or "")
-    return (text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
 
 
 def parse_duration_str(duration_str):
