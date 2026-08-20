@@ -7,7 +7,7 @@
 # Type         : API Based Telegram Music Bot
 #
 # Bot          : @CopyxMusicBot
-# Channel      : https://t.me/copymusic
+# Channel      : https://t.me/CopymusicOfficial
 # GitHub       : https://github.com/yourusername/CopyxMusic
 #
 # Unauthorized copying, modification, or redistribution
