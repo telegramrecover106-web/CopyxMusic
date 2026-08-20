@@ -1,1 +1,0 @@
-# Optional Netscape-format YouTube cookies. Leave empty if not needed.
