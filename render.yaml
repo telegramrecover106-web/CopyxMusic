@@ -1,0 +1,22 @@
+# ==========================================================
+# Copyright (c) 2026 CopyMusic
+# All Rights Reserved. 
+#
+# Project      : CopyMusic API Telegram Music Bot
+# Powered By   : Copy Music
+# Type         : API Based Telegram Music Bot
+#
+# Bot          : @CopyxMusicBot
+# Channel      : https://t.me/copymusic
+# GitHub       : https://github.com/yourusername/CopyxMusic
+#
+# Unauthorized copying, modification, or redistribution
+# of this source code without permission is prohibited.
+# ==========================================================
+services:
+  - type: worker
+    name: CopyxMusic
+    runtime: python
+    buildCommand: pip install -U -r requirements.txt
+    startCommand: python -m CopyxMusic
+    plan: free
