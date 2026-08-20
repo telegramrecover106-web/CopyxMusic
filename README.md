@@ -41,7 +41,9 @@
 | 🔌 **Download API** | Optional external download API with yt-dlp fallback |
 | 🤖 **Clone System** | Add unlimited bot instances with `/clone` |
 | 🛡️ **Admin Controls** | Kick, ban, mute, unmute group members |
-| 📊 **Live Progress Bar** | Real-time progress updates every 10 seconds |
+| 📊 **Live Progress Bar** | Real-time progress updates every 5 seconds |
+| 👋 **Dynamic Welcome** | Group/member name, ID, username and profile-photo welcome card |
+| 🎙️ **VC Lifecycle** | Announces VC start/end and clears playback state when a call ends |
 | 🔄 **Queue System** | Add multiple songs, auto-plays next in queue |
 | 🐳 **Docker Ready** | Heroku deploys as container; other platforms as native Python |
 | ☁️ **Cloud Ready** | Runs on Render, Koyeb, Railway, Heroku, or your VPS |
@@ -287,11 +289,11 @@ Copy [`kust.env`](https://github.com/kustbots/kustmusic/blob/master/kust.env) an
 | Command | Description | Who |
 |---|---|---|
 | `/play <song>` | Play a song or YouTube URL | Everyone |
-| `/skip` | Skip current song | Admins |
-| `/stop` | Stop and clear queue | Admins |
-| `/pause` | Pause playback | Admins |
-| `/resume` | Resume playback | Admins |
-| `/clear` | Clear the queue | Admins |
+| `/skip` | Skip current song | Everyone |
+| `/stop` | Stop and clear queue | Everyone |
+| `/pause` | Pause playback | Everyone |
+| `/resume` | Resume playback | Everyone |
+| `/clear` | Clear the queue | Everyone |
 | `/ping` | Bot stats and latency | Everyone |
 | `/clone <token>` | Add a new bot instance | Anyone (private) |
 | `/active` | List all active bots | Main Owner |
