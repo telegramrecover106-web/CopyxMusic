@@ -1,0 +1,42 @@
+{
+  "name": "Kust Music Bot",
+  "description": "🎧 Kust Music — Free Telegram VC music bot that runs on Render, Koyeb, Railway & Heroku easily!",
+  "repository": "https://github.com/kustbots/kustmusic",
+  "logo": "https://telegra.ph/file/d02b81736a7e9519c6386.jpg",
+  "keywords": ["telegram", "music", "bot", "vc", "python"],
+  "stack": "container",
+  "env": {
+    "API_ID": {
+      "description": "Your Telegram API_ID from https://my.telegram.org",
+      "required": true
+    },
+    "API_HASH": {
+      "description": "Your Telegram API_HASH from https://my.telegram.org",
+      "required": true
+    },
+    "BOT_TOKEN": {
+      "description": "Your Telegram bot token from @BotFather",
+      "required": true
+    },
+    "ASSISTANT_SESSION": {
+      "description": "Pyrogram string session for assistant account",
+      "required": true
+    },
+    "OWNER_ID": {
+      "description": "Your Telegram user ID (integer)",
+      "required": true
+    },
+    "SEARCH_API_URL": {
+      "description": "Search API URL (leave blank to use default)",
+      "required": false
+    },
+    "DOWNLOAD_API_BASE": {
+      "description": "Download API base URL (leave blank to use yt-dlp)",
+      "required": false
+    },
+    "YOUTUBE_COOKIES": {
+      "description": "Paste your YouTube cookies here (optional, for bypassing rate limits)",
+      "required": false
+    }
+  }
+}
