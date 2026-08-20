@@ -23,7 +23,7 @@ async def play_command(client, message):
     if not query:
         return await message.reply_text("❌ **Usage:** `/play <song name or url>`")
 
-    status_msg = await message.reply_text("🔎 <b>Searching for your track...</b>\n⏳ <i>Please wait...</i>", parse_mode=ParseMode.HTML)
+    status_msg = await message.reply_text("🔎 **Searching...**")
 
     if "youtu.be" in query:
         m = re.search(r"youtu\.be/([^?&]+)", query)
@@ -32,7 +32,7 @@ async def play_command(client, message):
 
     result = await fetch_youtube_link(query)
     if not result:
-        return await status_msg.edit_text("❌ <b>No matching track found.</b>\nTry another search.", parse_mode=ParseMode.HTML)
+        return await status_msg.edit_text("❌ No results found.")
 
     song_info = {
         "title": result.get("title"),
@@ -145,18 +145,3 @@ async def resume_command(client, message):
         await message.reply_text("▶️ **Resumed.**")
     except Exception:
         pass
-
-
-async def queue_command(client, message):
-    chat_id = message.chat.id
-    items = state.chat_queues.get(chat_id, [])
-    if not items:
-        return await message.reply_text("🎵 <b>Queue is empty.</b>", parse_mode=ParseMode.HTML)
-
-    lines = ["<blockquote>🎶 <b>UP NEXT</b></blockquote>", ""]
-    for idx, item in enumerate(items[:10], 1):
-        title = item.get("title") or "Unknown track"
-        lines.append(f"<b>{idx}.</b> 🎧 {title}")
-    if len(items) > 10:
-        lines.append(f"\n<i>+ {len(items)-10} more track(s)</i>")
-    await message.reply_text("\n".join(lines), parse_mode=ParseMode.HTML)
