@@ -1,16 +1,21 @@
 FROM python:3.10-slim
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ffmpeg git curl unzip ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+# सभी जरूरी पैकेज एक साथ इंस्टॉल
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    nodejs \
+    npm \
+    git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://deno.land/install.sh | DENO_INSTALL=/usr/local sh && \
-    deno --version
+# ऐप कॉपी करें
+COPY . /app/
+WORKDIR /app/
 
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 8080
-CMD ["python", "main.py"]
+# पायथन पैकेज इंस्टॉल करें
+RUN pip install -r requirements.txt
+
+# स्टार्ट कमांड
+CMD bash start
+ 
