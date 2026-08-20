@@ -111,13 +111,33 @@ async def welcome_new_members(client, message):
 
 
 async def video_chat_event_handler(client, message):
-    if getattr(message, "video_chat_started", None) is not None:
-        await message.reply_text("😍 <b>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ sᴛᴀʀᴛᴇᴅ🥳</b>", parse_mode=ParseMode.HTML)
+    """Handle ONLY Telegram's voice/video-chat lifecycle service messages.
+
+    This is deliberately paired with dedicated custom filters in router.py.
+    Using the broad `filters.service` filter here caused the generic welcome
+    service handler to consume the update before this handler could see it.
+    """
+    started = getattr(message, "video_chat_started", None)
+    ended = getattr(message, "video_chat_ended", None)
+
+    if started is not None:
+        # Mark the chat active immediately so /play can be used on the very
+        # next message, even before PyTgCalls has joined the call.
+        state.active_voice_chats.add(message.chat.id)
+        await message.reply_text(
+            "😍 <b>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ sᴛᴀʀᴛᴇᴅ🥳</b>",
+            parse_mode=ParseMode.HTML,
+        )
         return
-    if getattr(message, "video_chat_ended", None) is not None:
+
+    if ended is not None:
         from handlers.music import reset_chat_playback
         await reset_chat_playback(client, message.chat.id, delete_files=True)
-        await message.reply_text("😕 <b>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴇɴᴅᴇᴅ💔</b>\n<b>Queue and playback records have been cleared.</b>", parse_mode=ParseMode.HTML)
+        await message.reply_text(
+            "😕 <b>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴇɴᴅᴇᴅ💔</b>\n"
+            "<b>Queue and playback records have been cleared.</b>",
+            parse_mode=ParseMode.HTML,
+        )
 
 
 async def clone_command(client, message):
